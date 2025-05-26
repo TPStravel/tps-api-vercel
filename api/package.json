@@ -1,0 +1,12 @@
+{
+  "name": "tps-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "gpt.js",
+  "scripts": {
+    "start": "node gpt.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}

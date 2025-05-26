@@ -1,10 +1,10 @@
+import express from 'express';
 import fetch from 'node-fetch';
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método não permitido' });
-  }
+const app = express();
+app.use(express.json());
 
+app.post('/api/gpt', async (req, res) => {
   const { message } = req.body;
 
   if (!process.env.OPENAI_API_KEY) {
@@ -28,8 +28,12 @@ export default async function handler(req, res) {
     const data = await response.json();
     const reply = data.choices?.[0]?.message?.content || 'Sem resposta do modelo.';
     res.status(200).json({ reply });
-
   } catch (error) {
     res.status(500).json({ error: 'Erro: ' + error.message });
   }
-}
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
